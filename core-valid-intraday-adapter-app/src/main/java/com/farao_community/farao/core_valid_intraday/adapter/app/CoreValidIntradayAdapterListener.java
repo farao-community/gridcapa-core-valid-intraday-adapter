@@ -34,6 +34,8 @@ import static com.farao_community.farao.gridcapa.task_manager.api.TaskStatus.SUC
 public class CoreValidIntradayAdapterListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CoreValidIntradayAdapterListener.class);
+    public static final String AUTOMATIC = "automatic";
+    public static final String MANUAL = "manual";
     private final CoreValidIntradayClient coreValidIntradayClient;
     private final MinioAdapter minioAdapter;
 
@@ -53,11 +55,11 @@ public class CoreValidIntradayAdapterListener {
     }
 
     private void handleAutoTask(final TaskDto taskDto) {
-        handleTask(taskDto, this::getAutomaticCoreValidIntradayRequest, "automatic");
+        handleTask(taskDto, this::getAutomaticCoreValidIntradayRequest, AUTOMATIC);
     }
 
     private void handleManualTask(final TaskDto taskDto) {
-        handleTask(taskDto, this::getManualCoreValidIntradayRequest, "manual");
+        handleTask(taskDto, this::getManualCoreValidIntradayRequest, MANUAL);
     }
 
     private void handleTask(final TaskDto taskDto,
@@ -139,11 +141,12 @@ public class CoreValidIntradayAdapterListener {
                                    final boolean isLaunchedAutomatically) {
         final List<ProcessRunDto> runHistory = taskDto.getRunHistory();
         if (runHistory == null || runHistory.isEmpty()) {
+            String launchType = isLaunchedAutomatically ? AUTOMATIC : MANUAL;
             LOGGER.warn("Failed to handle {} run request on timestamp {} because it has no run history",
-                        isLaunchedAutomatically ? "automatic" : "manual",
+                        launchType,
                         taskDto.getTimestamp());
             throw new CoreValidIntradayAdapterException("Failed to handle %s run request on timestamp because it has no run history"
-                                                        .formatted(isLaunchedAutomatically ? "automatic" : "manual"));
+                                                        .formatted(launchType));
         }
         runHistory.sort((o1, o2) -> o2.getExecutionDate().compareTo(o1.getExecutionDate()));
         return runHistory.getFirst().getId().toString();
