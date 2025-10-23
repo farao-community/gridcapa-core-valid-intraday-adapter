@@ -30,8 +30,8 @@
 	<properties>
 		<argLine /> <!-- required for java agent declaration, do not remove -->
 		<!-- BUSINESS DEPENDENCIES -->
-		<core-valid-intraday-runner.version>1.0.0-SNAPSHOT</core-valid-intraday-runner.version>
-		<task-manager.version>1.36.0</task-manager.version>
+		<core-valid-intraday-runner.version>0.1.0-alpha</core-valid-intraday-runner.version>
+		<task-manager.version>1.37.0</task-manager.version>
 		<gridcapa.starter.minio.adapter.version>1.7.0</gridcapa.starter.minio.adapter.version>
 	</properties>
 
