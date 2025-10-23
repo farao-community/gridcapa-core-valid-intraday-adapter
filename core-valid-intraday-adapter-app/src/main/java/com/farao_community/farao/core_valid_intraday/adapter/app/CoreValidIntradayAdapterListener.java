@@ -141,7 +141,7 @@ public class CoreValidIntradayAdapterListener {
                                    final boolean isLaunchedAutomatically) {
         final List<ProcessRunDto> runHistory = taskDto.getRunHistory();
         if (runHistory == null || runHistory.isEmpty()) {
-            String launchType = isLaunchedAutomatically ? AUTOMATIC : MANUAL;
+            final String launchType = isLaunchedAutomatically ? AUTOMATIC : MANUAL;
             LOGGER.warn("Failed to handle {} run request on timestamp {} because it has no run history",
                         launchType,
                         taskDto.getTimestamp());
