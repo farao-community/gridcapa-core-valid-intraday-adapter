@@ -106,6 +106,7 @@ public class CoreValidIntradayAdapterListener {
         CoreValidIntradayFileResource glsk = null;
         CoreValidIntradayFileResource mergedCnec = null;
         CoreValidIntradayFileResource marketPoint = null;
+        CoreValidIntradayFileResource ocappiMarketPoint = null;
         CoreValidIntradayFileResource pra = null;
         for (final ProcessFileDto processFileDto : processFiles) {
             final String fileType = processFileDto.getFileType();
@@ -118,6 +119,7 @@ public class CoreValidIntradayAdapterListener {
                 case "GLSK" -> glsk = new CoreValidIntradayFileResource(fileName, fileUrl);
                 case "MERGED-CNEC" -> mergedCnec = new CoreValidIntradayFileResource(fileName, fileUrl);
                 case "MARKET-POINT" -> marketPoint = new CoreValidIntradayFileResource(fileName, fileUrl);
+                case "OCAPPI" -> ocappiMarketPoint = new CoreValidIntradayFileResource(fileName, fileUrl);
                 case "PRA" -> pra = new CoreValidIntradayFileResource(fileName, fileUrl);
                 default -> throw new IllegalStateException("Unexpected value: " + fileType);
             }
@@ -132,7 +134,9 @@ public class CoreValidIntradayAdapterListener {
                 glsk,
                 mergedCnec,
                 marketPoint,
+                ocappiMarketPoint,
                 pra,
+                taskDto.getParameters(),
                 isLaunchedAutomatically
         );
     }

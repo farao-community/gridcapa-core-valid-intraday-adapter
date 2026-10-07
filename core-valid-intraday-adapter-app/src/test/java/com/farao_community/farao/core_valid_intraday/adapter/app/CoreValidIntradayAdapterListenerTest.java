@@ -57,6 +57,7 @@ class CoreValidIntradayAdapterListenerTest {
     private String cgmFileType;
     private String glskFileType;
     private String marketPointFileType;
+    private String ocappiMarketPointFileType;
     private String praFileType;
 
     private String cnecRamFileName;
@@ -65,6 +66,7 @@ class CoreValidIntradayAdapterListenerTest {
     private String glskFileName;
     private String mergedCnecFileName;
     private String marketPointFileName;
+    private String ocappiMarketPointFileName;
     private String praFileName;
 
     private String cgmFileUrl;
@@ -75,11 +77,13 @@ class CoreValidIntradayAdapterListenerTest {
     private String verticeFilePath;
     private String mergedCnecFilePath;
     private String marketPointFilePath;
+    private String ocappiMarketPointFilePath;
     private String praFilePath;
     private String cnecRamFileUrl;
     private String verticeFileUrl;
     private String mergedCnecFileUrl;
     private String marketPointFileUrl;
+    private String ocappiMarketPointFileUrl;
     private String praFileUrl;
 
     public TaskDto createTaskDtoWithStatus(final TaskStatus status) {
@@ -93,6 +97,7 @@ class CoreValidIntradayAdapterListenerTest {
         processFiles.add(new ProcessFileDto(glskFilePath, glskFileType, ProcessFileStatus.VALIDATED, glskFileName, "docId4", timestamp));
         processFiles.add(new ProcessFileDto(mergedCnecFilePath, mergedCnecFileType, ProcessFileStatus.VALIDATED, mergedCnecFileName, "docId5", timestamp));
         processFiles.add(new ProcessFileDto(marketPointFilePath, marketPointFileType, ProcessFileStatus.VALIDATED, marketPointFileName, "docId6", timestamp));
+        processFiles.add(new ProcessFileDto(ocappiMarketPointFilePath, ocappiMarketPointFileType, ProcessFileStatus.VALIDATED, ocappiMarketPointFileName, "docId8", timestamp));
         processFiles.add(new ProcessFileDto(praFilePath, praFileType, ProcessFileStatus.VALIDATED, praFileName, "docId7", timestamp));
         final List<ProcessEventDto> processEvents = new ArrayList<>();
         final List<ProcessRunDto> runHistory = new ArrayList<>();
@@ -108,6 +113,7 @@ class CoreValidIntradayAdapterListenerTest {
         glskFileType = "GLSK";
         mergedCnecFileType = "MERGED-CNEC";
         marketPointFileType = "MARKET-POINT";
+        ocappiMarketPointFileType = "OCAPPI";
         praFileType = "PRA";
 
         cnecRamFileName = "cnec-ram";
@@ -116,6 +122,7 @@ class CoreValidIntradayAdapterListenerTest {
         glskFileName = "glsk";
         mergedCnecFileName = "merged-cnec";
         marketPointFileName = "market-point";
+        ocappiMarketPointFileName = "ocappi-market-point";
         praFileName = "PRA";
 
         cnecRamFilePath = "/CNEC-RAM";
@@ -124,6 +131,7 @@ class CoreValidIntradayAdapterListenerTest {
         glskFilePath = "/GLSK";
         mergedCnecFilePath = "/MERGED-CNEC";
         marketPointFilePath = "/MARKET-POINT";
+        ocappiMarketPointFilePath = "/OCAPPI";
         praFilePath = "/PRA";
 
         cnecRamFileUrl = "file://CNEC-RAM/cnecram";
@@ -132,6 +140,7 @@ class CoreValidIntradayAdapterListenerTest {
         glskFileUrl = "file://GLSK/glsk";
         mergedCnecFileUrl = "file://MERGED-CNEC/mergedCnec";
         marketPointFileUrl = "file://MARKET-POINT/marketPoint";
+        ocappiMarketPointFileUrl = "file://OCAPPI/ocappi";
         praFileUrl = "file://PRA/pra";
 
         Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(cnecRamFilePath, 1)).thenReturn(cnecRamFileUrl);
@@ -140,6 +149,7 @@ class CoreValidIntradayAdapterListenerTest {
         Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(glskFilePath, 1)).thenReturn(glskFileUrl);
         Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(mergedCnecFilePath, 1)).thenReturn(mergedCnecFileUrl);
         Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(marketPointFilePath, 1)).thenReturn(marketPointFileUrl);
+        Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(ocappiMarketPointFilePath, 1)).thenReturn(ocappiMarketPointFileUrl);
         Mockito.when(minioAdapter.generatePreSignedUrlFromFullMinioPath(praFilePath, 1)).thenReturn(praFileUrl);
     }
 
@@ -150,8 +160,8 @@ class CoreValidIntradayAdapterListenerTest {
         Assertions.assertEquals(taskDto.getId().toString(), coreValidRequest.getId());
         Assertions.assertEquals(cnecRamFileName, coreValidRequest.getCnecRam().getFilename());
         Assertions.assertEquals(cnecRamFileUrl, coreValidRequest.getCnecRam().getUrl());
-        Assertions.assertEquals(verticeFileName, coreValidRequest.getVertice().getFilename());
-        Assertions.assertEquals(verticeFileUrl, coreValidRequest.getVertice().getUrl());
+        Assertions.assertEquals(verticeFileName, coreValidRequest.getVertices().getFilename());
+        Assertions.assertEquals(verticeFileUrl, coreValidRequest.getVertices().getUrl());
         Assertions.assertEquals(cgmFileName, coreValidRequest.getCgm().getFilename());
         Assertions.assertEquals(cgmFileUrl, coreValidRequest.getCgm().getUrl());
         Assertions.assertEquals(glskFileName, coreValidRequest.getGlsk().getFilename());
@@ -160,6 +170,8 @@ class CoreValidIntradayAdapterListenerTest {
         Assertions.assertEquals(mergedCnecFileUrl, coreValidRequest.getMergedCnec().getUrl());
         Assertions.assertEquals(marketPointFileName, coreValidRequest.getMarketPoint().getFilename());
         Assertions.assertEquals(marketPointFileUrl, coreValidRequest.getMarketPoint().getUrl());
+        Assertions.assertEquals(ocappiMarketPointFileName, coreValidRequest.getOcappiMarketPoint().getFilename());
+        Assertions.assertEquals(ocappiMarketPointFileUrl, coreValidRequest.getOcappiMarketPoint().getUrl());
         Assertions.assertEquals(praFileName, coreValidRequest.getPra().getFilename());
         Assertions.assertEquals(praFileUrl, coreValidRequest.getPra().getUrl());
         Assertions.assertFalse(coreValidRequest.getLaunchedAutomatically());
